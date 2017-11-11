@@ -3,7 +3,7 @@ pr de gpgsave
 *! 0.1 HS, Nov 11, 2017
 
     version 9.2
-    syntax [anything(name=file)] [, replace Speed(integer 1) *]
+    syntax [anything(name=file)] [, replace COMPress(integer 0) *]
     qui {
 
     if `"`file'"' == "" {
@@ -26,7 +26,7 @@ pr de gpgsave
     noi _requestPassword "`file'"
 
     whereis gpg
-    shell `r(gpg)' --batch --yes --passphrase "$pass" --output "`file'" --symmetric `tmpdat'
+    shell `r(gpg)' --batch --yes --passphrase "$pass" -z `compress' --output "`file'" --symmetric `tmpdat'
     
     global S_FN = `"`file'"'
 

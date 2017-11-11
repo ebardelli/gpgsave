@@ -7,7 +7,7 @@ help for {hi:gpgsave}, {hi:gpguse}, {hi:gpgappend}, {hi:gpgmerge}{right:(Emanuel
 {title:Save, use, append, and merge datasets encrypted by gpg on Windows/Unix/Linux/MacOSX}
 
 {phang}
-{cmd:gpgsave} [{it:filename}] [{cmd:,} {cmd:replace} {it:save_options}]
+{cmd:gpgsave} [{it:filename}] [{cmd:,} {cmd:replace} {cmdab:comp:ress(0-9)} {it:save_options}]
 
 {phang}
 {cmd:gpguse} {it:filename}{space 1}[{cmd:,} {cmd:clear} {it:use_options}]
@@ -27,6 +27,7 @@ help for {hi:gpgsave}, {hi:gpguse}, {hi:gpgappend}, {hi:gpgmerge}{right:(Emanuel
 {cmd:gpgsave} encrypts and stores the current dataset on disk under the name {it:filename}.
 If no {it:filename} is specified, the command tries to use the last filename under which the data were last known to Stata (c(filename)).
 If {it:filename} is specified without an extension, {hi:.dta.gpg} is used.
+Compression can be used by using the option {cmdab:comp:ress(0-9)}, where 0 is no compression and 9 is the highest compression level. By default, no compression is used.
 
 {pstd}
 {cmd:gpguse} loads a Stata-format dataset previously saved by {cmd:gpgsave} into memory.
@@ -44,8 +45,8 @@ Obviously, all these commands require the gpg command to be available at the com
 It can be downloaded for free at {browse "http://www.gnupg.org"}.
 On Unix/Linux/MacOSX you can check if gpg is available with
 
-{pstd}
-    {cmd:. shell which gpg}
+{p 8 13 2}
+{cmd:. shell which gpg}
 
 {pstd}
 which should return something like '/usr/bin/gpg'. 
@@ -57,8 +58,8 @@ The easiest way to check if your path is set up correctly on Windows is to try o
 Additionally, this module requires the Stata command {cmd:whereis}, which is used to keep track of ancillary programs and must be installed together with {cmd: gpgsave}.
 After installing {cmd:gpg}, you save the location of the executable in the {it:whereis} directory by running the command {cmd: whereis gpg} {it:location}.
 
-{pstd}
-    {cmd:. whereis gpg /usr/bin/gpg}
+{p 8 13 2}
+{cmd:. whereis gpg /usr/bin/gpg}
 
 {pstd}
 In principle, the command should work on any system compatible with gpg and ordinary shell commands available.
@@ -88,6 +89,7 @@ merge_options are all options available with {help merge}.
 
     {cmd:. gpgsave myfile}
     {cmd:. gpgsave myfile, replace}
+    {cmd:. gpgsave myfile, replace compress(6)}
 
     {cmd:. gpguse myfile}
     {cmd:. gpguse myfile, clear}
@@ -99,12 +101,12 @@ merge_options are all options available with {help merge}.
 {title:Author}
 
 {pstd}
-Emanuele Bardelli ({browse "mailto:bardelli@umich.edu":bardelli@umich,ed}), School of Education, University of Michigan, USA.
+Emanuele Bardelli ({browse "mailto:bardelli@umich.edu":bardelli@umich.edu}), School of Education, University of Michigan, USA.
 
 {title:Acknowledgements}
 
 {pstd}
-This program is heavely inspired and uses much of the souce code from gzsave, by Henrik Stovring ({browse "mailto:stovring@biostat.au.dk":stovring@biostat.au.dk}), Biostatistics, Department of Public Health, Aarhus University, Denmark.
+This program is heavely inspired and uses much of the souce code from gzsave, by Henrik Stovring, Biostatistics, Department of Public Health, Aarhus University, Denmark.
 
 {title:Also see}
 
