@@ -6,3 +6,7 @@ f gpgsave.ado
 f gpguse.ado
 f gpgappend.ado
 f gpgmerge.ado
+f gpgsave.sthlp
+f gpguse.sthlp
+f gpgappend.sthlp
+f gpgmerge.sthlp
