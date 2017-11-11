@@ -1,0 +1,8 @@
+v 0.0.1
+d gpgsave
+d A module that allows the use of encrypted datasets in Stata
+d Distribution-Date: 11 November 2017
+f gpgsave.ado
+f gpguse.ado
+f gpgappend.ado
+f gpgmerge.ado
