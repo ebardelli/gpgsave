@@ -10,6 +10,9 @@ help for {hi:gpgsave}, {hi:gpguse}, {hi:gpgappend}, {hi:gpgmerge}{right:(Emanuel
 {cmd:gpgsave} [{it:filename}] [{cmd:,} {cmd:replace} {cmdab:comp:ress(0-9)} {it:save_options}]
 
 {phang}
+{cmd:gpgsaveold} [{it:filename}] [{cmd:,} {cmd:replace} {cmdab:comp:ress(0-9)} {it:save_options}]
+
+{phang}
 {cmd:gpguse} {it:filename}{space 1}[{cmd:,} {cmd:clear} {it:use_options}]
 
 {phang}
@@ -28,6 +31,9 @@ help for {hi:gpgsave}, {hi:gpguse}, {hi:gpgappend}, {hi:gpgmerge}{right:(Emanuel
 If no {it:filename} is specified, the command tries to use the last filename under which the data were last known to Stata (c(filename)).
 If {it:filename} is specified without an extension, {hi:.dta.gpg} is used.
 Compression can be used by using the option {cmdab:comp:ress(0-9)}, where 0 is no compression and 9 is the highest compression level. By default, no compression is used.
+
+{pstd}
+{cmd:gzsaveold} compresses and stores the current dataset on disk in Stata 7 format.
 
 {pstd}
 {cmd:gpguse} loads a Stata-format dataset previously saved by {cmd:gpgsave} into memory.
@@ -90,6 +96,8 @@ merge_options are all options available with {help merge}.
     {cmd:. gpgsave myfile}
     {cmd:. gpgsave myfile, replace}
     {cmd:. gpgsave myfile, replace compress(6)}
+
+    {cmd:. gpgsaveold myfile}
 
     {cmd:. gpguse myfile}
     {cmd:. gpguse myfile, clear}

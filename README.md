@@ -4,6 +4,7 @@ These programs extend Stata to use encrypted datasets.
 
 ## How to install
 Run
+
     net install gpgsave, from("https://raw.githubusercontent.com/ebardelli/gpgsave/master/")
 
 ## Dependencies
