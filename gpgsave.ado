@@ -77,6 +77,6 @@ end
 
 pr de _requestPassword
     *quietly log off
-    di  in green "Please enter the password for `1'", _newline _request(pass)
+    di as input "Please enter the password for `1'", _newline _request(pass)
     *quietly log on
 end
