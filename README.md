@@ -7,6 +7,10 @@ Run
 
     net install gpgsave, from("https://raw.githubusercontent.com/ebardelli/gpgsave/master/")
 
+or alternatively
+    
+    github install ebardelli/gpgsave
+
 ## Dependencies
 - Gnupg: At least version 2.
 - whereis: Install this program using ssc (```ssc install whereis```) and register gpg using ```whereis gpg your_path```.
