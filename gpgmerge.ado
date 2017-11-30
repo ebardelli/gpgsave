@@ -1,7 +1,24 @@
 pr de gpgmerge
 * Merge a gpg dataset
-*! 0.1 HS, Nov 11, 2017
-    version 9.2
+*! 0.1.1 EB, Nov 30, 2017 - Add merge type selection
+*! 0.1   EB, Nov 11, 2017
+    version 11
+
+    gettoken mtype 0 : 0, parse(" ,")
+
+    if (!strpos("`mtype'", ":") & "`mtype'"!="") {
+        if (_caller()>=11) {
+            di as smcl as txt "{p}"
+            di as smcl "(note: you are using old"
+            di as smcl "{bf:merge} syntax; see"
+            di as smcl "{bf:{help merge:[D] merge}} for new syntax)"
+            di as smcl "{p_end}"
+        }
+        merge_10 `mtype' `0'
+        exit
+    }
+
+    local mtype `"`mtype'"'
 
     qui {
         gettoken first 0: 0
@@ -67,7 +84,7 @@ pr de gpgmerge
         gettoken gpgfile anything2: anything2
     }
 
-    merge `vlist' using `filelist', `options'
+    merge `mtype' `vlist' using `filelist', `options'
     }
 end
 * Create filename to use with encrypted save/use (gpgsave)
