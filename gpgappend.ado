@@ -1,6 +1,6 @@
 pr de gpgappend
 * Append a gpg dataset
-*! 0.1 HS, Nov 11, 2017
+*! 0.1 EB, Nov 11, 2017
 version 9.2
     qui {
         gettoken first 0: 0
@@ -31,7 +31,7 @@ version 9.2
     }
 end
 * Create filename to use with compressed save/use (gpgsave and zipsave)
-*! 0.1 HS, Nov 11, 2017
+*! 0.1 EB, Nov 11, 2017
     pr de _gfn, rclass
     version 9.2
     syntax , filename(string asis) extension(string)
