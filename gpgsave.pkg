@@ -1,10 +1,10 @@
-v 0.0.1
+v 0.0.2
 d 'gpgsave': A module that allows the use of encrypted datasets in Stata
 d
 d gpgsave is a module for encrypting and decrypting Stata datasets using the
 d gpg utility.
 d
-d Distribution-Date: 11 November 2017
+d Distribution-Date: 14 December 2017
 d
 d Author: Emanuele Bardelli, University of Michigan
 d Support: bardelli@umich.edu

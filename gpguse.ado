@@ -1,6 +1,7 @@
 pr de gpguse
 * Open a gpg encrypted dataset
-*! 0.1 HS, Nov 11, 2017
+*! 0.0.2 EB, Dec 14, 2017 - Support openssl encryption
+*! 0.0.1 EB, Nov 11, 2017
     version 9.2
     local allargs `"`0'"'
 
@@ -44,7 +45,7 @@ pr de gpguse
 end
 
 * Create filename to use with encrypted save/use (gpgsave)
-*! 0.1 HS, Nov 11, 2017
+*! 0.0.1 EB, Nov 11, 2017
 pr de _gfn, rclass
     version 9.2
     syntax , filename(string asis) extension(string)
@@ -65,7 +66,7 @@ end
 
 
 * OK to open filename with compressed use? (gpgsave and zipsave)
-*! 0.1 HS, Nov 11, 2017
+*! 0.0.1 EB, Nov 11, 2017
 pr de _ok2use
     version 9.2
     syntax , filename(string asis) [clear]

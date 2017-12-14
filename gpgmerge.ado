@@ -1,7 +1,8 @@
 pr de gpgmerge
 * Merge a gpg dataset
-*! 0.1.1 EB, Nov 30, 2017 - Add merge type selection
-*! 0.1   EB, Nov 11, 2017
+*! 0.0.2  EB, Dec 14, 2017 - Support openssl encryption
+*! 0.0.1a EB, Nov 30, 2017 - Add merge type selection
+*! 0.0.1  EB, Nov 11, 2017
     version 11
 
     gettoken mtype 0 : 0, parse(" ,")
@@ -76,11 +77,11 @@ pr de gpgmerge
         noi _requestPassword "`gpgfile'"
 
         if !missing("`openssl'") {
-            shell openssl aes-256-cbc -a -salt -in `tmpdat' -out "`file'" -k "$pass"
+            shell openssl aes-256-cbc -a -d -in "`gpgfile'" -out `tmpdat`fn'' -k "$pass"
         }
         else {
             whereis gpg
-            shell `r(gpg)' --batch --yes --passphrase "$pass" -z `compress' --output "`file'" --symmetric `tmpdat'
+            shell `r(gpg)' --batch --yes --passphrase "$pass" --output `tmpdat`fn'' --decrypt "`gpgfile'"
         }
         
         local filelist = "`filelist' `tmpdat`fn''"
