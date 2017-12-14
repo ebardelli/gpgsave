@@ -53,7 +53,12 @@ pr de gpgmerge
     gettoken gpgfile anything: anything
     while (`"`gpgfile'"' ~= "") {
 
-    _gfn, filename("`gpgfile'") extension(.dta.gpg)
+    if !missing("`openssl'") {
+        _gfn, filename(`gpgfile') extension(.dta.enc)
+    }
+    else {
+        _gfn, filename(`gpgfile') extension(.dta.gpg)
+    }
     local gpgfile = r(fileout)
 
     /* We want to break off if the file to merge with doesn't exist */
@@ -69,7 +74,12 @@ pr de gpgmerge
     gettoken gpgfile anything2: anything2
     while (`"`gpgfile'"' ~= "") {
 
-        _gfn, filename("`gpgfile'") extension(.dta.gpg)
+        if !missing("`openssl'") {
+            _gfn, filename(`gpgfile') extension(.dta.enc)
+        }
+        else {
+            _gfn, filename(`gpgfile') extension(.dta.gpg)
+        }
         local gpgfile = r(fileout)
 
         tempfile tmpdat`fn'

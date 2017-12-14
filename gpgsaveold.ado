@@ -13,7 +13,12 @@ pr de gpgsaveold
         }
     }
 
-    _gfn, filename(`file') extension(.dta.gpg)
+    if !missing("`openssl'") {
+        _gfn, filename(`file') extension(.dta.enc)
+    }
+    else {
+        _gfn, filename(`file') extension(.dta.gpg)
+    }
     local file = r(fileout)
 
     _ok2encrypt, filename(`file') `replace'

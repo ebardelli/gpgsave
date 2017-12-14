@@ -12,7 +12,12 @@ version 9.2
 
         syntax anything(name=gpgfile) [, openssl *]
 
-        _gfn, filename(`gpgfile') extension(.dta.gpg)
+        if !missing("`openssl'") {
+            _gfn, filename(`gpgfile') extension(.dta.enc)
+        }
+        else {
+            _gfn, filename(`gpgfile') extension(.dta.gpg)
+        }
         local gpgfile = r(fileout)
 
         /* We want to break off if the file to append doesn't exist */

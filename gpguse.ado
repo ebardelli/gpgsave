@@ -22,7 +22,12 @@ pr de gpguse
     syntax anything(name=gpgfile) [, clear openssl *]
 
     qui {
-        _gfn, filename(`gpgfile') extension(.dta.enc)
+        if !missing("`openssl'") {
+            _gfn, filename(`gpgfile') extension(.dta.enc)
+        }
+        else {
+            _gfn, filename(`gpgfile') extension(.dta.gpg)
+        }
         local gpgfile = r(fileout)
 
         _ok2use, filename(`gpgfile') `clear'
