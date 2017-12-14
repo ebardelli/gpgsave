@@ -1,5 +1,5 @@
 {smcl}
-{* 11ov2017}
+{* 14Dec2017}
 {hline}
 help for {hi:gpgsave}, {hi:gpguse}, {hi:gpgappend}, {hi:gpgmerge}{right:(Emanuele Bardelli)}
 {hline}
@@ -32,7 +32,7 @@ If no {it:filename} is specified, the command tries to use the last filename und
 If {it:filename} is specified without an extension, {hi:.dta.gpg} is used.
 Compression can be used by using the option {cmdab:comp:ress(0-9)}, where 0 is no compression and 9 is the highest compression level. By default, no compression is used.
 
-{pstd}
+{pstd} 
 {cmd:gzsaveold} compresses and stores the current dataset on disk in Stata 7 format.
 
 {pstd}
@@ -80,6 +80,9 @@ The command has however only been tested on the platforms mentioned above, so as
 {cmd:clear} permits the data to be loaded even if there is a dataset already in memory and even if that dataset has changed since it was last saved.
 
 {phang}
+{cmd:openssl} encrypts the dataset using openssl instead of gnupg. Note that compression is not currently supported when using this option.
+
+{phang}
 save_options are all options available with {help save}.
 
 {phang}
@@ -96,6 +99,7 @@ merge_options are all options available with {help merge}.
     {cmd:. gpgsave myfile}
     {cmd:. gpgsave myfile, replace}
     {cmd:. gpgsave myfile, replace compress(6)}
+    {cmd:. gpgsave myfile.enc, replace openssl}
 
     {cmd:. gpgsaveold myfile}
 
