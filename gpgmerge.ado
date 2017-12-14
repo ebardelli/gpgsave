@@ -44,7 +44,7 @@ pr de gpgmerge
         exit 100
     }
     else {
-        syntax anything(id="gpgfilelist") [, *]
+        syntax anything(id="gpgfilelist") [, openssl *]
     }
 
     local anything2 `"`anything'"'
@@ -75,8 +75,13 @@ pr de gpgmerge
 
         noi _requestPassword "`gpgfile'"
 
-        whereis gpg
-        shell `r(gpg)' --batch --yes --passphrase "$pass" --output `tmpdat`fn'' --decrypt "`gpgfile'"
+        if !missing("`openssl'") {
+            shell openssl aes-256-cbc -a -salt -in `tmpdat' -out "`file'" -k "$pass"
+        }
+        else {
+            whereis gpg
+            shell `r(gpg)' --batch --yes --passphrase "$pass" -z `compress' --output "`file'" --symmetric `tmpdat'
+        }
         
         local filelist = "`filelist' `tmpdat`fn''"
         local fn = `fn' + 1

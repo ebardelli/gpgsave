@@ -1,6 +1,6 @@
 pr de gpguse
 * Open a gpg encrypted dataset
-*! 0.1 EB, Nov 11, 2017
+*! 0.1 HS, Nov 11, 2017
     version 9.2
     local allargs `"`0'"'
 
@@ -18,10 +18,10 @@ pr de gpguse
         local usind = "using"
     }
 
-    syntax anything(name=gpgfile) [, clear *]
+    syntax anything(name=gpgfile) [, clear openssl *]
 
     qui {
-        _gfn, filename(`gpgfile') extension(.dta.gpg)
+        _gfn, filename(`gpgfile') extension(.dta.enc)
         local gpgfile = r(fileout)
 
         _ok2use, filename(`gpgfile') `clear'
@@ -30,8 +30,13 @@ pr de gpguse
         * Request password from user
         noi _requestPassword "`gpgfile'"
 
-        whereis gpg
-        shell `r(gpg)' --batch --yes --passphrase "$pass" --output `tmpdat' --decrypt "`gpgfile'"
+        if !missing("`openssl'") {
+            shell openssl aes-256-cbc -a -d -in "`gpgfile'" -out `tmpdat' -k "$pass"
+        }
+        else {
+            whereis gpg
+            shell `r(gpg)' --batch --yes --passphrase "$pass" --output `tmpdat' --decrypt "`gpgfile'"
+        }
 
         use `initlist' `usind' `tmpdat', clear `options'
         global S_FN = "`gpgfile'"
@@ -39,7 +44,7 @@ pr de gpguse
 end
 
 * Create filename to use with encrypted save/use (gpgsave)
-*! 0.1 EB, Nov 11, 2017
+*! 0.1 HS, Nov 11, 2017
 pr de _gfn, rclass
     version 9.2
     syntax , filename(string asis) extension(string)
@@ -60,7 +65,7 @@ end
 
 
 * OK to open filename with compressed use? (gpgsave and zipsave)
-*! 0.1 EB, Nov 11, 2017
+*! 0.1 HS, Nov 11, 2017
 pr de _ok2use
     version 9.2
     syntax , filename(string asis) [clear]
