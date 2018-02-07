@@ -110,7 +110,7 @@ end
     syntax , filename(string asis) extension(string)
 
     * Only check for punctuation in filename, not in path
-    _getfilename `filename'
+    _getfilename "`filename'"
 
     * Remove opening and closing quotes, if any, from filename
     if strpos(`"`filename'"', char(34)) ~= 0 {
