@@ -93,7 +93,9 @@ pr de _ok2use
 end
 
 pr de _requestPassword
-    capture quietly log off
-    di as input "Please enter the password for `1'", _newline _request(pass)
-    capture quietly log on
+    if missing("${pass}") {
+        capture quietly log off
+        di as input "Please enter the password for `1'", _newline _request(pass)
+        capture quietly log on
+    }
 end

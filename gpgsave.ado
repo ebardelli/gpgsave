@@ -65,7 +65,7 @@ pr de _gfn, rclass
     return local fileout `"`filename'"'
 end
 
-  
+
 * OK to save filename with encrypted save? (gpgsave)
 *! 0.0.1 EB, Nov 11, 2017
 pr de _ok2encrypt
@@ -87,7 +87,9 @@ pr de _ok2encrypt
 end
 
 pr de _requestPassword
-    capture quietly log off
-    di as input "Please enter the password for `1'", _newline _request(pass)
-    capture quietly log on
+    if missing("${pass}") {
+        capture quietly log off
+        di as input "Please enter the password for `1'", _newline _request(pass)
+        capture quietly log on
+    }
 end

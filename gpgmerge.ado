@@ -93,7 +93,7 @@ pr de gpgmerge
             whereis gpg
             shell `r(gpg)' --batch --yes --passphrase "$pass" --output `tmpdat`fn'' --decrypt "`gpgfile'"
         }
-        
+
         local filelist = "`filelist' `tmpdat`fn''"
         local fn = `fn' + 1
 
@@ -124,7 +124,9 @@ end
 end
 
 pr de _requestPassword
-    *quietly log off
-    di as input "Please enter the password for `1'", _newline _request(pass)
-    *quietly log on
+    if missing("${pass}") {
+        capture quietly log off
+        di as input "Please enter the password for `1'", _newline _request(pass)
+        capture quietly log on
+    }
 end

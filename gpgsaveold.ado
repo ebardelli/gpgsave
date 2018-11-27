@@ -36,7 +36,7 @@ pr de gpgsaveold
         whereis gpg
         shell `r(gpg)' --batch --yes --passphrase "$pass" -z `compress' --output "`file'" --symmetric `tmpdat'
     }
-    
+
     global S_FN = `"`file'"'
 
     noi di in green "data encrypted with gpg and saved in file `file'"
@@ -84,7 +84,9 @@ pr de _ok2encrypt
 end
 
 pr de _requestPassword
-    capture quietly log off
-    di as input "Please enter the password for `1'", _newline _request(pass)
-    capture quietly log on
+    if missing("${pass}") {
+        capture quietly log off
+        di as input "Please enter the password for `1'", _newline _request(pass)
+        capture quietly log on
+    }
 end
