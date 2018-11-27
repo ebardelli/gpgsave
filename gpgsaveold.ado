@@ -30,7 +30,7 @@ pr de gpgsaveold
     noi _requestPassword "`file'"
 
     if !missing("`openssl'") {
-        shell openssl aes-256-cbc -a -salt -in `tmpdat' -out "`file'" -k "$pass"
+        shell openssl aes-256-cbc -md md5 -a -salt -in `tmpdat' -out "`file'" -k "$pass"
     }
     else {
         whereis gpg

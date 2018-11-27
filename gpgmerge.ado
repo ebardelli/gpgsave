@@ -87,7 +87,7 @@ pr de gpgmerge
         noi _requestPassword "`gpgfile'"
 
         if !missing("`openssl'") {
-            shell openssl aes-256-cbc -a -d -in "`gpgfile'" -out `tmpdat`fn'' -k "$pass"
+            shell openssl aes-256-cbc -md md5 -a -d -in "`gpgfile'" -out `tmpdat`fn'' -k "$pass"
         }
         else {
             whereis gpg
