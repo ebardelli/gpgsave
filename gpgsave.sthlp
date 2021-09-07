@@ -1,5 +1,5 @@
 {smcl}
-{* 14Dec2017}
+{* 2021 Sep 07}
 {hline}
 help for {hi:gpgsave}, {hi:gpguse}, {hi:gpgappend}, {hi:gpgmerge}{right:(Emanuele Bardelli)}
 {hline}
@@ -32,7 +32,7 @@ If no {it:filename} is specified, the command tries to use the last filename und
 If {it:filename} is specified without an extension, {hi:.dta.gpg} is used.
 Compression can be used by using the option {cmdab:comp:ress(0-9)}, where 0 is no compression and 9 is the highest compression level. By default, no compression is used.
 
-{pstd} 
+{pstd}
 {cmd:gzsaveold} compresses and stores the current dataset on disk in Stata 7 format.
 
 {pstd}
@@ -55,7 +55,7 @@ On Unix/Linux/MacOSX you can check if gpg is available with
 {cmd:. shell which gpg}
 
 {pstd}
-which should return something like '/usr/bin/gpg'. 
+which should return something like '/usr/bin/gpg'.
 On Windows the gnupg.exe must similarly be found in the path (cf. the documentation on your Windows version).
 The easiest way to check if your path is set up correctly on Windows is to try out {cmd:gpgsave} and {cmd:gpguse} on a test dataset (ie. an artificial dataset you can afford to lose!).
 {hi:If it does not work, the most likely explanation is that you either have not installed gpg or your path is not configured correctly.}
@@ -81,6 +81,11 @@ The command has however only been tested on the platforms mentioned above, so as
 
 {phang}
 {cmd:openssl} encrypts the dataset using openssl instead of gnupg. Note that compression is not currently supported when using this option.
+
+{phang}
+{cmd:age} encrypts the dataset using age instead of gnupg. Note that only public/private key encryption is currently
+supported. Note that public keys can also be passed as a text file that contains a list of keys on each line. No
+passphrase support is planned at this time.
 
 {phang}
 save_options are all options available with {help save}.
@@ -126,5 +131,5 @@ This program is heavely inspired and uses much of the souce code from gzsave, by
 Manual:  {hi:[R] save}
 
 {phang}
-Online: help for {help save}, {help use}, {help compress}, {help append}, {help 
+Online: help for {help save}, {help use}, {help compress}, {help append}, {help
 > merge}, {help zipsave} (if installed, otherwise {net describe zipsave})

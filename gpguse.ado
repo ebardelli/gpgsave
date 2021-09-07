@@ -19,10 +19,13 @@ pr de gpguse
         local usind = "using"
     }
 
-    syntax anything(name=gpgfile) [, clear openssl *]
+    syntax anything(name=gpgfile) [, clear openssl  age *]
 
     qui {
-        if !missing("`openssl'") {
+        if !missing("`age'") {
+            _gfn, filename(`gpgfile') extension(.dta.age)
+        }
+        else if !missing("`openssl'") {
             _gfn, filename(`gpgfile') extension(.dta.enc)
         }
         else {
@@ -33,13 +36,20 @@ pr de gpguse
         _ok2use, filename(`gpgfile') `clear'
         tempfile tmpdat
 
-        * Request password from user
-        noi _requestPassword "`gpgfile'"
-
-        if !missing("`openssl'") {
+        if !missing("`age'") {
+            * Request identity from user
+            noi _requestIdentity "`gpgfile'"
+            whereis age
+            shell `r(age)' -d -i $identity "`gpgfile'" > `tmpdat'
+        }
+        else if !missing("`openssl'") {
+            * Request password from user
+            noi _requestPassword "`gpgfile'"
             shell openssl aes-256-cbc -md md5 -a -d -in "`gpgfile'" -out `tmpdat' -k "$pass"
         }
         else {
+            * Request password from user
+            noi _requestPassword "`gpgfile'"
             whereis gpg
             shell `r(gpg)' --batch --yes --passphrase "$pass" --output `tmpdat' --decrypt "`gpgfile'"
         }
@@ -96,6 +106,14 @@ pr de _requestPassword
     if missing("${pass}") {
         capture quietly log off
         di as input "Please enter the password for `1'", _newline _request(pass)
+        capture quietly log on
+    }
+end
+
+pr de _requestIdentity
+    if missing("${identity}") {
+        capture quietly log off
+        di as input "Please enter the path to your identity file for `1'", _newline _request(identity)
         capture quietly log on
     }
 end

@@ -3,7 +3,7 @@ pr de gpgsaveold
 *! 0.0.2 EB, Dec 14, 2017 - Support openssl encryption
 *! 0.0.1 EB, Nov 11, 2017
     version 9.2
-    syntax [anything(name=file)] [, replace openssl COMPress(integer 0) *]
+    syntax [anything(name=file)] [, replace openssl age COMPress(integer 0) *]
     qui {
     if `"`file'"' == "" {
         local file = `""$S_FN""'
@@ -13,7 +13,10 @@ pr de gpgsaveold
         }
     }
 
-    if !missing("`openssl'") {
+    if !missing("`age'") {
+        _gfn, filename(`file') extension(.dta.age)
+    }
+    else if !missing("`openssl'") {
         _gfn, filename(`file') extension(.dta.enc)
     }
     else {
@@ -26,13 +29,21 @@ pr de gpgsaveold
     tempfile tmpdat
     saveold `tmpdat', `options'
 
-    * Request password from user
-    noi _requestPassword "`file'"
 
-    if !missing("`openssl'") {
+    if !missing("`age'") {
+        * Request password from user
+        noi _requestPubIdentity "`file'"
+        whereis age
+        shell `r(age)' -d -R $pub_identity `tmpdat' > "`file'"
+    }
+    else if !missing("`openssl'") {
+        * Request password from user
+        noi _requestPassword "`file'"
         shell openssl aes-256-cbc -md md5 -a -salt -in `tmpdat' -out "`file'" -k "$pass"
     }
     else {
+        * Request password from user
+        noi _requestPassword "`file'"
         whereis gpg
         shell `r(gpg)' --batch --yes --passphrase "$pass" -z `compress' --output "`file'" --symmetric `tmpdat'
     }
@@ -87,6 +98,14 @@ pr de _requestPassword
     if missing("${pass}") {
         capture quietly log off
         di as input "Please enter the password for `1'", _newline _request(pass)
+        capture quietly log on
+    }
+end
+
+pr de _requestPubIdentity
+    if missing("${pub_identity}") {
+        capture quietly log off
+        di as input "Please enter the path to the public identity file for `1'", _newline _request(pub_identity)
         capture quietly log on
     }
 end
