@@ -38,7 +38,7 @@ pr de gpgsaveold
         * Request password from user
         noi _requestPubage_key "`file'"
         whereis age
-        shell `r(age)' -d -R $recipients `tmpdat' > "`file'"
+        shell `r(age)' -d -R "$recipients" `tmpdat' > "`file'"
     }
     else if !missing("`openssl'") {
         * Request password from user

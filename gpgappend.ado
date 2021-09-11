@@ -35,7 +35,7 @@ version 9.2
             * Request age_key from user
             noi _requestage_key "`file'"
             whereis age
-            shell `r(age)' -d -i $age_key "`gpgfile'" > `tmpdat'
+            shell `r(age)' -d -i "$age_key" "`gpgfile'" > `tmpdat'
         }
         else if !missing("`openssl'") {
             * Request password from user

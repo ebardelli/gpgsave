@@ -40,7 +40,7 @@ pr de gpguse
             * Request age_key from user
             noi _requestage_key "`gpgfile'"
             whereis age
-            shell `r(age)' -d -i $age_key "`gpgfile'" > `tmpdat'
+            shell `r(age)' -d -i "$age_key" "`gpgfile'" > `tmpdat'
         }
         else if !missing("`openssl'") {
             * Request password from user

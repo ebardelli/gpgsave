@@ -94,7 +94,7 @@ pr de gpgmerge
             * Request age_key from user
             noi _requestage_key "`file'"
             whereis age
-            shell `r(age)' -i $age_key "`gpgfile'" > `tmpdat`fn''
+            shell `r(age)' -i "$age_key" "`gpgfile'" > `tmpdat`fn''
         }
         else if !missing("`openssl'") {
             * Request password from user

@@ -40,7 +40,7 @@ pr de gpgsave
         * Request password from user
         noi _requestRecipients "`file'"
         whereis age
-        shell `r(age)' -R $recipients `tmpdat' > "`file'"
+        shell `r(age)' -R "$recipients" `tmpdat' > "`file'"
     }
     else if !missing("`openssl'") {
         * Request password from user
