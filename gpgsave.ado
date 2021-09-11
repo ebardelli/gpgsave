@@ -15,7 +15,9 @@ pr de gpgsave
             exit
         }
     }
-   _gfn, filename(`file') extension(.dta.age)
+
+    if !missing("`age'") {
+        _gfn, filename(`file') extension(.dta.age)
     }
     else if !missing("`openssl'") {
         _gfn, filename(`file') extension(.dta.enc)
@@ -109,8 +111,6 @@ end
 
 pr de _requestRecipients
     if missing("${recipients}") {
-        capture quietly log off
         di as input "Please enter the path to the recipients file for `1'", _newline _request(recipients)
-        capture quietly log on
     }
 end
