@@ -5,7 +5,7 @@ pr de gpgsave
 *! 0.0.1 EB, Nov 11, 2017
 
     version 9.2
-    syntax [anything(name=file)] [, replace openssl age COMPress(integer 0) *]
+    syntax [anything(name=file)] [, replace openssl age COMPress(integer 0) recipients(string) *]
     qui {
 
     if `"`file'"' == "" {
@@ -15,9 +15,7 @@ pr de gpgsave
             exit
         }
     }
-
-    if !missing("`age'") {
-        _gfn, filename(`file') extension(.dta.age)
+   _gfn, filename(`file') extension(.dta.age)
     }
     else if !missing("`openssl'") {
         _gfn, filename(`file') extension(.dta.enc)
@@ -27,6 +25,10 @@ pr de gpgsave
     }
     local file = r(fileout)
 
+    if !missing("`recipients'") {
+        global recipients = "`recipients'"
+    }
+
     _ok2encrypt, filename(`file') `replace'
 
     tempfile tmpdat
@@ -34,9 +36,9 @@ pr de gpgsave
 
     if !missing("`age'") {
         * Request password from user
-        noi _requestPubage_key "`file'"
+        noi _requestRecipients "`file'"
         whereis age
-        shell `r(age)' -R $pub_age_key `tmpdat' > "`file'"
+        shell `r(age)' -R $recipients `tmpdat' > "`file'"
     }
     else if !missing("`openssl'") {
         * Request password from user
@@ -106,9 +108,9 @@ pr de _requestPassword
 end
 
 pr de _requestPubage_key
-    if missing("${pub_age_key}") {
+    if missing("${recipients}") {
         capture quietly log off
-        di as input "Please enter the path to the public key file for `1'", _newline _request(pub_age_key)
+        di as input "Please enter the path to the recipients file for `1'", _newline _request(recipients)
         capture quietly log on
     }
 end
