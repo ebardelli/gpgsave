@@ -71,6 +71,17 @@ After installing {cmd:gpg}, you save the location of the executable in the {it:w
 In principle, the command should work on any system compatible with gpg and ordinary shell commands available.
 The command has however only been tested on the platforms mentioned above, so as always {hi:use at your own risk!}
 
+{pstd}
+Since September 2021, the {cmd:gpgsave} suite of programs also supports encryption and decryption using age {browse "https://github.com/FiloSottile/age"}. Age is a modern replacement for gnupg that features small explicit keys, no
+config options, and UNIX-style composability. Currently, only key-based encryption is supported and there are no plans
+to support passphrase-based encryption for now.
+
+To set up age, download and install the binary file from {browse "https://github.com/FiloSottile/age/releases/"} and
+save the location of the executable in stata with
+
+{p 8 13 2}
+{cmd:. whereis age /path/to/age}
+
 {title:Options}
 
 {phang}
@@ -86,6 +97,11 @@ The command has however only been tested on the platforms mentioned above, so as
 {cmd:age} encrypts the dataset using age instead of gnupg. Note that only public/private key encryption is currently
 supported. Note that public keys can also be passed as a text file that contains a list of keys on each line. No
 passphrase support is planned at this time.
+
+{phang}
+{cmd:recipients(string)} path to the file listing users that will be able to decrypt the dataset. Age supports both its
+own public keys and ssh public keys. If using a text file, list one key on each line. You can add comments to this key
+file using #.
 
 {phang}
 save_options are all options available with {help save}.
