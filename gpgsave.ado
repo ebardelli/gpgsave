@@ -107,7 +107,7 @@ pr de _requestPassword
     }
 end
 
-pr de _requestPubage_key
+pr de _requestRecipients
     if missing("${recipients}") {
         capture quietly log off
         di as input "Please enter the path to the recipients file for `1'", _newline _request(recipients)
