@@ -91,10 +91,10 @@ pr de gpgmerge
         tempfile tmpdat`fn'
 
         if !missing("`age'") {
-            * Request identity from user
-            noi _requestIdentity "`file'"
+            * Request age_key from user
+            noi _requestage_key "`file'"
             whereis age
-            shell `r(age)' -i $identity "`gpgfile'" > `tmpdat`fn''
+            shell `r(age)' -i $age_key "`gpgfile'" > `tmpdat`fn''
         }
         else if !missing("`openssl'") {
             * Request password from user
@@ -145,10 +145,10 @@ pr de _requestPassword
     }
 end
 
-pr de _requestIdentity
-    if missing("${identity}") {
+pr de _requestage_key
+    if missing("${age_key}") {
         capture quietly log off
-        di as input "Please enter the path to your identity file for `1'", _newline _request(identity)
+        di as input "Please enter the path to your key file for `1'", _newline _request(age_key)
         capture quietly log on
     }
 end

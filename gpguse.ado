@@ -37,10 +37,10 @@ pr de gpguse
         tempfile tmpdat
 
         if !missing("`age'") {
-            * Request identity from user
-            noi _requestIdentity "`gpgfile'"
+            * Request age_key from user
+            noi _requestage_key "`gpgfile'"
             whereis age
-            shell `r(age)' -d -i $identity "`gpgfile'" > `tmpdat'
+            shell `r(age)' -d -i $age_key "`gpgfile'" > `tmpdat'
         }
         else if !missing("`openssl'") {
             * Request password from user
@@ -110,10 +110,10 @@ pr de _requestPassword
     }
 end
 
-pr de _requestIdentity
-    if missing("${identity}") {
+pr de _requestage_key
+    if missing("${age_key}") {
         capture quietly log off
-        di as input "Please enter the path to your identity file for `1'", _newline _request(identity)
+        di as input "Please enter the path to your key file for `1'", _newline _request(age_key)
         capture quietly log on
     }
 end

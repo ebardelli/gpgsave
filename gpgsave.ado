@@ -34,9 +34,9 @@ pr de gpgsave
 
     if !missing("`age'") {
         * Request password from user
-        noi _requestPubIdentity "`file'"
+        noi _requestPubage_key "`file'"
         whereis age
-        shell `r(age)' -R $pub_identity `tmpdat' > "`file'"
+        shell `r(age)' -R $pub_age_key `tmpdat' > "`file'"
     }
     else if !missing("`openssl'") {
         * Request password from user
@@ -105,10 +105,10 @@ pr de _requestPassword
     }
 end
 
-pr de _requestPubIdentity
-    if missing("${pub_identity}") {
+pr de _requestPubage_key
+    if missing("${pub_age_key}") {
         capture quietly log off
-        di as input "Please enter the path to the public identity file for `1'", _newline _request(pub_identity)
+        di as input "Please enter the path to the public key file for `1'", _newline _request(pub_age_key)
         capture quietly log on
     }
 end
